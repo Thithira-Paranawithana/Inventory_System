@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Inventory_System.DTOs;
+using Inventory_System.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory_System.Controllers
@@ -7,5 +9,6 @@ namespace Inventory_System.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        
     }
 }
