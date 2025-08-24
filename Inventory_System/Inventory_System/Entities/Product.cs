@@ -9,13 +9,13 @@ namespace Inventory_System.Entities
         public int Id { get; set; }
 
         [Required]
-        public string SKU { get; set; }
+        public string SKU { get; set; } = string.Empty;
 
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Required]
-        public string Category { get; set; }
+        public string Category { get; set; } = string.Empty;
 
         [Required]
         [Column(TypeName ="decimal(10,2)")]

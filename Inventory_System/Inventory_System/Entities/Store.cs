@@ -9,13 +9,13 @@ namespace Inventory_System.Entities
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Required]
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         [Required]
-        public string Address { get; set; }
+        public string Address { get; set; } = string.Empty;
 
         public List<User> Users { get; set; } = new();
         public List<Inventory> Inventories { get; set; } = new();

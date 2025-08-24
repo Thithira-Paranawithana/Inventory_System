@@ -15,7 +15,7 @@ namespace Inventory_System.Entities
 
         public int RecommendedQuantity { get; set; }
 
-        public string Reason { get; set; }
+        public string Reason { get; set; } = string.Empty;
 
         public DateTime GeneratedDate { get; set; }
 

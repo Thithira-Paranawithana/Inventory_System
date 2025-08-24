@@ -19,7 +19,7 @@ namespace Inventory_System.Entities
         [Column(TypeName ="decimal(10,2)")]
         public decimal UnitPrice { get; set; }
 
-        public DateTime SaleDate { get; set; }
+        public DateTime SaleDate { get; set; } = DateTime.UtcNow;
 
 
     }
