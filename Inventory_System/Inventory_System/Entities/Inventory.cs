@@ -17,5 +17,9 @@ namespace Inventory_System.Entities
 
         public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
 
+        // adding RowVersion for concurrency handling
+        [Timestamp]
+        public byte[] RowVersion { get; set; } = null!;
+
     }
 }

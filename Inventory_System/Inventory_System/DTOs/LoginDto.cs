@@ -5,10 +5,10 @@ namespace Inventory_System.DTOs
 {
     public class LoginDto
     {
-        [Required]
+        [Required(ErrorMessage = "Username is required")]
         public string Username { get; set; } = string.Empty;
 
-        [Required]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; } = string.Empty;
     }
 

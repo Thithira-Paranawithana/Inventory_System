@@ -6,19 +6,17 @@ namespace Inventory_System.DTOs
 {
     public class SalesTransactionDto
     {
-        [Required]
+        [Required(ErrorMessage = "Store Id is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Store Id should be a positive integer")]
         public int StoreId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Product Id is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Product Id should be a positive integer")]
         public int ProductId { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue)]
+        [Range(1, int.MaxValue, ErrorMessage = "Quantity should be a positive integer")]
         public int Quantity { get; set; }
-
-        [Required]
-        [Range(0.01, double.MaxValue)]
-        public decimal UnitPrice { get; set; }
 
         [Required]
         public DateTime SaleDate { get; set; } 
