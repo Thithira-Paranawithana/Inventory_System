@@ -14,7 +14,7 @@ namespace Inventory_System.DTOs
         [Range(1, int.MaxValue, ErrorMessage = "Product Id should be a positive integer")]
         public int ProductId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Quantity is required")]
         [Range(1, int.MaxValue, ErrorMessage = "Quantity should be a positive integer")]
         public int Quantity { get; set; }
 

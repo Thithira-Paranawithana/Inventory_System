@@ -18,6 +18,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<InventoryDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<InventoryService>();
+builder.Services.AddScoped<SalesService>();
+
 
 // Auth config
 builder.Services.AddAuthentication(options =>

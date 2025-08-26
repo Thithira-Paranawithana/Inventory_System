@@ -50,5 +50,21 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Inventory_System.Controllers.SalesController",
+    "Method": "RecordindSale",
+    "RelativePath": "api/Sales/transaction",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "salesDto",
+        "Type": "Inventory_System.DTOs.SalesTransactionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
