@@ -23,7 +23,7 @@ namespace Inventory_System.Entities
         [Required]
         public string Role { get; set; } = string.Empty;
 
-        public int StoreId { get; set; }
-        public Store Store { get; set; }
+        public int? StoreId { get; set; }
+        public Store? Store { get; set; }
     }
 }

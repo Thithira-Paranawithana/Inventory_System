@@ -90,7 +90,7 @@ namespace Inventory_System.Data
                     Email = "client1@2025.com",
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword("Password@123"),
                     Role = "Client",
-                    StoreId = stores[2].Id
+                    StoreId = null
                 }
             };
 

@@ -14,6 +14,5 @@ namespace Inventory_System.DTOs
         public int MinStockLevel { get; set; }
         public decimal Price { get; set; }
         public DateTime LastUpdated { get; set; }
-        public bool IsLowStock => CurrentStock <= MinStockLevel;
     }
 }

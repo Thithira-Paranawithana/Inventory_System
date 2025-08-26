@@ -40,7 +40,7 @@ namespace Inventory_System.Controllers
 
                 // find user in db by username
                 var user = await _context.Users
-                    .Include(u => u.Store)  // include sore info
+                    .Include(u => u.Store)  // include store info
                     .FirstOrDefaultAsync(u => u.Username == loginDto.Username);
 
                 if(user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
@@ -69,7 +69,7 @@ namespace Inventory_System.Controllers
                     Token = jwtToken,
                     Username = user.Username,
                     Role = user.Role,
-                    StoreId = user.StoreId
+                    StoreId = user.StoreId ?? 0  // 0 for clients 
                 });
 
             }
@@ -110,11 +110,15 @@ namespace Inventory_System.Controllers
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role),
-                new Claim("StoreId", user.StoreId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, // Issued at time
                     new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString(),
                     ClaimValueTypes.Integer64)
             };
+
+            if (user.StoreId.HasValue)
+            {
+                claims.Add(new Claim("StoreId", user.StoreId.Value.ToString()));
+            }
 
             // get secret key from configuration
             var key = new SymmetricSecurityKey(
@@ -145,8 +149,12 @@ namespace Inventory_System.Controllers
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role),
-                new Claim("StoreId", user.StoreId.ToString())
             };
+
+            if (user.StoreId.HasValue)
+            {
+                claims.Add(new Claim("StoreId", user.StoreId.Value.ToString()));
+            }
 
             // Create claims identity
             var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
