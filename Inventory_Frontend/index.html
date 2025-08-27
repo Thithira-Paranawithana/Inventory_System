@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7-Eleven Inventory System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Login Section -->
+    <div id="loginSection" class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+        <div class="card shadow" style="width: 800px;">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">7-Eleven Inventory</h2>
+                
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="username" placeholder="Username" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" id="loginBtn">Login</button>
+                </form>
+                
+                <div class="mt-3">
+                    <small class="text-muted">Demo Accounts:</small>
+                    <div class="d-flex gap-1 mt-2">
+                        <button class="btn btn-outline-secondary btn-sm demo-btn" data-user="manager1" data-pass="Password@123">Manager1</button>
+                        <button class="btn btn-outline-secondary btn-sm demo-btn" data-user="operator1" data-pass="Password@123">Operator1</button>
+                        <button class="btn btn-outline-secondary btn-sm demo-btn" data-user="manager2" data-pass="Password@123">Manager2</button>
+                        <button class="btn btn-outline-secondary btn-sm demo-btn" data-user="operator2" data-pass="Password@123">Operator2</button>
+                        <button class="btn btn-outline-secondary btn-sm demo-btn" data-user="manager3" data-pass="Password@123">Manager3</button>
+                        <button class="btn btn-outline-secondary btn-sm demo-btn" data-user="operator3" data-pass="Password@123">Operator3</button>
+                        <button class="btn btn-outline-secondary btn-sm demo-btn" data-user="client1" data-pass="Password@123">Client1</button>
+                        <button class="btn btn-outline-secondary btn-sm demo-btn" data-user="client2" data-pass="Password@123">Client2</button>
+                    </div>
+                </div>
+                
+                <div id="loginError" class="alert alert-danger mt-3 d-none"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div id="dashboardSection" class="d-none">
+        <!-- Navbar -->
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <span class="navbar-brand">🏪 7-Eleven Dashboard</span>
+                <div class="d-flex align-items-center text-white">
+                    <span id="userInfo" class="me-3"></span>
+                    <button class="btn btn-outline-light btn-sm" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid mt-4">
+            <!-- Loading Spinner -->
+            <div id="loading" class="text-center d-none">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Loading...</p>
+            </div>
+
+            <!-- Inventory Section -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Current Inventory</h5>
+                    <!-- Container for dynamic inventory controls -->
+                    <div id="inventoryControlsContainer">
+                        <button class="btn btn-primary btn-sm" id="loadInventoryBtn">Load Inventory</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="inventoryData">Click "Load Inventory" to view current stock levels.</div>
+                </div>
+            </div>
+
+            <!-- Sales Form -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Record Sale</h5>
+                </div>
+                <div class="card-body">
+                    <form id="salesForm" class="row g-3">
+                        <!-- Container for dynamic store input -->
+                        <div id="salesStoreContainer" class="col-md-3 d-none">
+                            <input type="number" class="form-control" id="salesStoreId" placeholder="Store ID" min="1">
+                        </div>
+                        <div class="col-md-4" id="productIdContainer">
+                            <input type="number" class="form-control" id="productId" placeholder="Product ID" required>
+                        </div>
+                        <div class="col-md-4" id="quantityContainer">
+                            <input type="number" class="form-control" id="quantity" placeholder="Quantity" min="1" required>
+                        </div>
+                        <div class="col-md-4" id="submitContainer">
+                            <button type="submit" class="btn btn-success w-100">Record Sale</button>
+                        </div>
+                    </form>
+                    <div id="salesMessage" class="mt-3"></div>
+                </div>
+            </div>
+
+            <!-- Manager Only Sections -->
+            <div id="managerSection" class="d-none">
+                <!-- Reorder Recommendations -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Reorder Recommendations</h5>
+                        <button class="btn btn-warning btn-sm" id="loadReordersBtn">Generate Recommendations</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="reorderData">Click "Generate Recommendations" to view reorder suggestions</div>
+                    </div>
+                </div>
+
+                <!-- ABC Analysis -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">ABC Analysis</h5>
+                        <button class="btn btn-info btn-sm" id="loadAbcBtn">Run ABC Analysis</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <canvas id="abcChart" width="300" height="300"></canvas>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="abcData">Click "Run ABC Analysis" to view product classification</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Our JS Modules -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+
+.demo-btn {
+    font-size: 0.75rem;
+}
+
+.badge-priority-high {
+    background-color: #dc3545 !important;
+}
+
+.badge-priority-medium {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+}
+
+.badge-priority-low {
+    background-color: #198754 !important;
+}
+
+.badge-abc-a {
+    background-color: #dc3545 !important;
+}
+
+.badge-abc-b {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+}
+
+.badge-abc-c {
+    background-color: #198754 !important;
+}
+
+#abcChart {
+    max-height: 300px;
+}
+
+/* loading spinner positioning */
+.position-loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050;
+}

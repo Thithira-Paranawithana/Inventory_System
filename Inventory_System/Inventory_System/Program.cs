@@ -22,6 +22,20 @@ builder.Services.AddScoped<SalesService>();     // register SalesService
 builder.Services.AddScoped<ReorderService>();   // register ReorderService
 builder.Services.AddScoped<AbcAnalysisService>();  // register AbcAnalysisService
 
+// add CORS policy for frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins(          
+            "http://127.0.0.1:5500",
+            "http://localhost:5500",
+            "file://")  // for opening HTML directly
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
 
 
 // Auth config
@@ -117,6 +131,10 @@ builder.Services.AddAuthorization(options =>
 
 
 var app = builder.Build();
+
+// enable CORS 
+app.UseCors("AllowFrontend");
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
