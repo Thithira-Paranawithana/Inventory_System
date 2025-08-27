@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "fc06e410-9f31-4a26-9460-b97b4483aad3",
+		"name": "InventorySystem",
+		"description": "7-Eleven Smart Inventory System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40585857",
+		"_collection_link": "https://warped-station-247348.postman.co/workspace/d3b8654b-33b6-498d-836b-a666114fc2c6/collection/40585857-fc06e410-9f31-4a26-9460-b97b4483aad3?action=share&source=collection_link&creator=40585857"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"manager1\",\r\n  \"password\": \"Password@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7235/api/Auth/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7235",
+					"path": [
+						"api",
+						"Auth",
+						"login"
+					]
+				},
+				"description": "## Login Endpoint\n\nThis endpoint allows users to authenticate and obtain a session token. Upon successful authentication, the server responds with a token and user details.\n\n### Request\n\n- **Method:** POST\n    \n- **URL:** `https://localhost:7235/api/Auth/login`\n    \n- **Content-Type:** application/json\n    \n\n#### Request Body\n\nThe request body must be a JSON object containing the following parameters:\n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| username | string | The username of the user. |\n| password | string | The password for the user. |\n\n**Example:**\n\n``` json\n{\n  \"username\": \"manager1\",\n  \"password\": \"Password@123\"\n}\n\n ```\n\n### Response\n\nOn a successful login, the response will include 200 OK status code and a JSON object with the following structure:\n\n| Key | Type | Description |\n| --- | --- | --- |\n| token | string | The JWT token |\n| username | string | The username of the logged-in user. |\n| role | string | The role assigned to the user. |\n| storeId | string | The identifier for the user's store. |\n\n**Successful Response Example:**\n\n``` json\n{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"username\": \"manager1\",\n  \"role\": \"admin\",\n  \"storeId\": \"store123\"\n}\n\n ```\n\n### Notes\n\n- Ensure that the username and password are correct to receive a successful response.\n    \n- The token provided in the response should be used for subsequent authenticated requests."
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n}"
+				},
+				"url": {
+					"raw": "https://localhost:7235/api/Auth/logout",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7235",
+					"path": [
+						"api",
+						"Auth",
+						"logout"
+					]
+				},
+				"description": "## Logout Endpoint\n\nThis endpoint is used to log out a user from the application. It effectively terminates the user session, ensuring that the user is no longer authenticated.\n\n### Request\n\n- **Method:** POST\n    \n- **URL:** `https://localhost:7235/api/Auth/logout`\n    \n- **Request Body:**\n    \n    - The request does not require any input parameters in the body. An empty JSON object `{}` is acceptable.\n        \n\n### Successful Response\n\n- **Status Code:** 200 OK\n    \n- **Content-Type:** application/json\n    \n- { \"message\": \"Logged out\"}\n    \n    - **message:** A string that contain a message indicating the result of the logout operation.\n        \n\n### Authentication Requirements\n\nThis endpoint requires the user to be authenticated prior to making the logout request. Ensure that a valid session or token is present when invoking this endpoint.\n\n### Possible Error Responses\n\nWhile the primary response for a successful logout is a 200 status code, the following error scenarios may occur:\n\n- **401 Unauthorized:** The user is not authenticated or the session has expired.\n    \n- **500 Internal Server Error:** An unexpected error occurred on the server while processing the request."
+			},
+			"response": []
+		},
+		{
+			"name": "GetInventory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7235/api/Inventory/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7235",
+					"path": [
+						"api",
+						"Inventory",
+						"1"
+					]
+				},
+				"description": "## Endpoint Description\n\nThis endpoint retrieves the inventory details for a specific store identified by its ID. The request is made using the HTTP GET method.\n\n### Request\n\n- **URL**: `https://localhost:7235/api/Inventory/{storeId}`\n    \n- **Method**: GET\n    \n- **Path Parameter**:\n    \n    - `storeId` (integer): The unique identifier for the store whose inventory details are being requested. In this example, the store ID is `1`.\n        \n\n### Response\n\nOn a successful request, the API returns a JSON object with the following structure:\n\n- **success** (boolean): Indicates whether the request was successful.\n    \n- **storeId** (integer): The ID of the store for which the inventory details are being retrieved.\n    \n- **data** (array): An array containing inventory items, where each item includes:\n    \n    - **id** (integer): The unique identifier for the inventory item.\n        \n    - **productId** (integer): The unique identifier for the product.\n        \n    - **productName** (string): The name of the product.\n        \n    - **sku** (string): The stock keeping unit identifier for the product.\n        \n    - **category** (string): The category to which the product belongs.\n        \n    - **currentStock** (integer): The current stock level of the product.\n        \n    - **minStockLevel** (integer): The minimum stock level for the product.\n        \n    - **price** (number): The price of the product.\n        \n    - **lastUpdated** (string): The timestamp of the last update made to the inventory item.\n        \n\n### Notes\n\n- A successful response will return a status code of `200`.\n    \n- The structure of the response may vary slightly based on the store and its inventory, but the fields listed above are standard."
+			},
+			"response": []
+		},
+		{
+			"name": "SalesTransaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"storeId\": 1,  \r\n  \"productId\": 13,\r\n  \"quantity\": 12,\r\n  \"saleDate\": \"2025-08-27T16:26:00Z\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7235/api/sales/transaction",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7235",
+					"path": [
+						"api",
+						"sales",
+						"transaction"
+					]
+				},
+				"description": "## API Endpoint: Create Sale Transaction\n\n### Request Method\n\n**POST**\n\n### Endpoint\n\n`https://localhost:7235/api/sales/transaction`\n\n### Description\n\nThis endpoint is used to create a new sale transaction in the specified store. It requires details about the store, product, quantity sold, and the date of the sale.\n\n### Request Parameters\n\nThe request body should be in JSON format and include the following parameters:\n\n- **storeId** (integer, required): The unique identifier of the store where the transaction is taking place.\n    \n- **productId** (integer, required): The unique identifier of the product being sold.\n    \n- **quantity** (integer, required): The number of units sold in the transaction.\n    \n- **saleDate** (string, required): The date and time when the sale occurred, formatted as ISO 8601.\n    \n\n### Example Request Body\n\n``` json\n{\n  \"storeId\": 1,\n  \"productId\": 13,\n  \"quantity\": 12,\n  \"saleDate\": \"2025-08-27T16:26:00Z\"\n}\n\n ```\n\n### Expected Response\n\nUpon a successful transaction, the API will return a 200 OK response with the following structure:\n\n- **success** (boolean): Indicates whether the transaction was successful.\n    \n- **message** (string): A message providing additional information about the transaction.\n    \n- **data** (object): Contains the details of the transaction, including:\n    \n    - **storeId** (integer): The store ID associated with the transaction.\n        \n    - **productId** (integer): The product ID associated with the transaction.\n        \n    - **quantity** (integer): The quantity sold in the transaction.\n        \n    - **saleDate** (string): The date and time of the sale.\n        \n\n### Example Response\n\n``` json\n{\n  \"success\": true,\n  \"message\": \"Sale recorded successfully\",\n  \"data\": {\n    \"storeId\": 1,\n    \"productId\": 13,\n    \"quantity\": 12,\n    \"saleDate\": \"2025-08-27T16:26:00Z\"\n  }\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Reorder_Recommendation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7235/api/algorithms/reorder-recommendations/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7235",
+					"path": [
+						"api",
+						"algorithms",
+						"reorder-recommendations",
+						"1"
+					]
+				},
+				"description": "### Endpoint Description\n\nThis endpoint retrieves the reorder recommendations for a specific store identified by the given ID. It provides insights into the products that need to be reordered based on various metrics.\n\n### Request\n\n- **Method**: GET\n    \n- **URL**: `https://localhost:7235/api/algorithms/reorder-recommendations/{storeId}`\n    \n- **Path Parameter**:\n    \n    - `storeId` (integer): The unique identifier for the store for which reorder recommendations are being requested.\n        \n\n### Successful Response\n\n- **Status Code**: 200 OK\n    \n- **Content-Type**: application/json\n    \n- **Fields**:\n    \n    - `success` (boolean): Indicates whether the request was successful.\n        \n    - `storeId` (integer): The ID of the store for which the recommendations are provided.\n        \n    - `estimatedTotalCost` (integer): The estimated total cost of the recommended reorder.\n        \n    - `data` (array): An array of product recommendations, each containing:\n        \n        - `productId` (integer): The unique identifier for the product.\n            \n        - `productName` (string): The name of the product.\n            \n        - `sku` (string): The stock keeping unit of the product.\n            \n        - `category` (string): The category to which the product belongs.\n            \n        - `currentStock` (integer): The current stock level of the product.\n            \n        - `minStockLevel` (integer): The minimum stock level for the product.\n            \n        - `recommendedQuantity` (integer): The quantity recommended for reorder.\n            \n        - `reason` (string): The reason for the reorder recommendation.\n            \n        - `estimatedCost` (integer): The estimated cost of the recommended quantity.\n            \n        - `priority` (string): The priority level of the recommendation.\n            \n        - `generatedDate` (string): The date when the recommendation was generated.\n            \n\n### Notes\n\n- Ensure that the `storeId` provided in the request is valid and corresponds to an existing store in the system.\n    \n- The response will include detailed information about each product that is recommended for reorder, allowing for better inventory management."
+			},
+			"response": []
+		},
+		{
+			"name": "ABC_Analysis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7235/api/algorithms/abc-analysis/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7235",
+					"path": [
+						"api",
+						"algorithms",
+						"abc-analysis",
+						"1"
+					]
+				},
+				"description": "### API Endpoint: Get ABC Analysis\n\nThis endpoint retrieves the ABC analysis for a specific store identified by its ID. The analysis categorizes products based on their contribution to total revenue, helping businesses manage inventory effectively.\n\n#### Request\n\n- **Method**: GET\n    \n- **URL**: `https://localhost:7235/api/algorithms/abc-analysis/{storeId}`\n    \n    - **Path Parameter**:\n        \n        - `storeId` (integer): The unique identifier for the store.\n            \n\n#### Successful Response\n\n- **Status Code**: 200 OK\n    \n- **Response Fields**:\n    \n    - `success` (boolean): Indicates if the request was successful.\n        \n    - `storeId` (integer): The identifier for the store associated with the analysis.\n        \n    - `data` (array): A sorted list of products analyzed, where each product includes:\n        \n        - `productId` (integer): The unique identifier for the product.\n            \n        - `productName` (string): The name of the product.\n            \n        - `sku` (string): The stock keeping unit of the product.\n            \n        - `category` (string): The category to which the product belongs.\n            \n        - `totalRevenue` (number): Total revenue generated by the product.\n            \n        - `revenuePercentage` (number): The percentage of total revenue contributed by the product.\n            \n        - `cumulativePercentage` (number): The cumulative percentage of revenue contribution.\n            \n        - `abcCategory` (string): The ABC category assigned to the product.\n            \n\n#### Notes\n\n- Ensure that the `storeId` parameter is valid to retrieve the correct analysis."
+			},
+			"response": []
+		}
+	]
+}
