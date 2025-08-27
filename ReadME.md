@@ -78,28 +78,52 @@ Seeded data is available via `DbInitializer.cs`.
 
 ## 📂 API Testing
 
+### Option 1: Postman 
 Postman collection is included in the `APIDoc` folder.
 
 **To use:**
 1. Import the JSON file into Postman
 2. Test all available APIs
 
+### Option 2: Frontend UI 
+A simple frontend interface is available for testing APIs.
+
+**To use:**
+1. Navigate to the `Inventory_Frontend` directory
+2. Open `index.html` in your browser
+3. Use the UI to interact with the APIs
+
+
 ## ⚙ Running the Project
 
-1. **Restore NuGet packages:**
+1. **Navigate to the backend project:**
+   ```bash
+   cd Inventory_System
+   ```
+
+2. **Restore NuGet packages:**
    ```bash
    dotnet restore
    ```
 
-2. **Apply migrations:** 
+3. **Apply migrations:** 
    ```bash
    dotnet ef database update
    ```
 
-3. **Build and run the project:**
+4. **Build and run the project:**
    ```bash
    dotnet run
    ```
 
-4. **Access APIs** via Postman using the provided collection
+5. **Test APIs** using either Postman or the frontend UI
 
+## 📁 Project Structure
+
+```
+├── Inventory_System/    # Main .NET backend project
+├── Inventory_Frontend/  # Frontend UI 
+├── APIDoc/              # Postman collection for API testing
+├── Database_Script/     # SQL script for database setup
+└── README.md            # Project documentation
+```
