@@ -6,6 +6,7 @@ namespace Inventory_System.Data
     {
         public static void Initialize(InventoryDbContext context)
         {
+          
             context.Database.EnsureCreated();
 
             if (context.Stores.Any())
@@ -86,12 +87,45 @@ namespace Inventory_System.Data
                 },
                 new User
                 {
+                    Username = "manager2",
+                    Email = "manager2@2025.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Password@123"),
+                    Role = "StoreManager",
+                    StoreId = stores[1].Id
+                },
+                 new User
+                {
+                    Username = "operator3",
+                    Email = "operator3@2025.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Password@123"),
+                    Role = "StoreOperator",
+                    StoreId = stores[2].Id
+                },
+                new User
+                {
+                    Username = "manager3",
+                    Email = "manager3@2025.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Password@123"),
+                    Role = "StoreManager",
+                    StoreId = stores[2].Id
+                },
+                new User
+                {
                     Username = "client1",
                     Email = "client1@2025.com",
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword("Password@123"),
                     Role = "Client",
                     StoreId = null
+                },
+                new User
+                {
+                    Username = "client2",
+                    Email = "client2@2025.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Password@123"),
+                    Role = "Client",
+                    StoreId = null
                 }
+
             };
 
             context.Users.AddRange(users);
