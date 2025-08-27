@@ -17,8 +17,10 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<InventoryDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<InventoryService>();
-builder.Services.AddScoped<SalesService>();
+builder.Services.AddScoped<InventoryService>();  // register InventoryService
+builder.Services.AddScoped<SalesService>();     // register SalesService
+builder.Services.AddScoped<ReorderService>();   // register ReorderService
+
 
 
 // Auth config

@@ -21,14 +21,7 @@ namespace Inventory_System.Services
 
             try
             {
-                // check storeId exists
-                var storeExist = await _context.Stores.AnyAsync(s => s.Id == salesDto.StoreId);
-
-                if (!storeExist)
-                {
-                    throw new ArgumentException("Store not found");
-                }
-
+                
                 // check product Id and get it to access price
                 var product = await _context.Products.FindAsync(salesDto.ProductId);
 

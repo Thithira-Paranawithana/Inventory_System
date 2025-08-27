@@ -24,7 +24,7 @@ namespace Inventory_System.Controllers
         }
 
         [HttpPost("transaction")]
-        public async Task<IActionResult> RecordindSale([FromBody] SalesTransactionDto salesDto)
+        public async Task<IActionResult> RecordSales([FromBody] SalesTransactionDto salesDto)
         {
             try
             {
