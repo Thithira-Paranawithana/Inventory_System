@@ -1,15 +1,16 @@
 ﻿using Inventory_System.Data;
 using Inventory_System.DTOs;
 using Inventory_System.Entities;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 namespace Inventory_System.Controllers
@@ -79,8 +80,8 @@ namespace Inventory_System.Controllers
             }
         }
 
-
         [HttpPost("logout")]
+        [Authorize("ApiPolicy")]
         public async Task<IActionResult> Logout()
         {
             try

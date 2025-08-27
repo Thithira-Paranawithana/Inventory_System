@@ -121,7 +121,7 @@ namespace Inventory_System.Services
         }
 
         // check user has access
-        public bool ValidateReorderAccess(string userRole, string? userStoreId, int requestedStoreId)
+        public bool ValidateUser(string userRole, string? userStoreId, int requestedStoreId)
         {
             // only managers can access 
             if (userRole != "StoreManager")

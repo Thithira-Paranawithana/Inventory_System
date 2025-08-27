@@ -20,6 +20,7 @@ builder.Services.AddDbContext<InventoryDbContext>(options => options.UseSqlServe
 builder.Services.AddScoped<InventoryService>();  // register InventoryService
 builder.Services.AddScoped<SalesService>();     // register SalesService
 builder.Services.AddScoped<ReorderService>();   // register ReorderService
+builder.Services.AddScoped<AbcAnalysisService>();  // register AbcAnalysisService
 
 
 
@@ -121,7 +122,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference();
+    //app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

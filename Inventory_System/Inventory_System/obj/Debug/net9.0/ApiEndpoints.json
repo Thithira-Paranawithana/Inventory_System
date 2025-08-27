@@ -1,6 +1,32 @@
 [
   {
     "ContainingType": "Inventory_System.Controllers.AlgorithmsController",
+    "Method": "GetAbcAnalysis",
+    "RelativePath": "api/Algorithms/abc-analysis/{storeId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "storeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Inventory_System.DTOs.AbcAnalysisDto, Inventory_System, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Inventory_System.Controllers.AlgorithmsController",
     "Method": "GetReorderRecommendation",
     "RelativePath": "api/Algorithms/reorder-recommendations/{storeId}",
     "HttpMethod": "GET",

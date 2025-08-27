@@ -82,8 +82,10 @@ namespace Inventory_System.Services
         // check user has access for the store
         public bool ValidateSaleAccess(string userRole, string? userStoreId, int requestedStoreId)
         {
-            if (userRole == "Client") return true;
-            if (userStoreId != null && int.Parse(userStoreId) == requestedStoreId) return true;
+            if (userRole == "Client") 
+                return true;
+            if (userStoreId != null && int.Parse(userStoreId) == requestedStoreId) 
+                return true;
             return false;
         }
 

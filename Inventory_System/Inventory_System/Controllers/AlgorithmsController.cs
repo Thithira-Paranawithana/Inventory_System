@@ -15,13 +15,18 @@ namespace Inventory_System.Controllers
     public class AlgorithmsController : ControllerBase
     {
         private readonly ReorderService _reorderService;
+        private readonly AbcAnalysisService _abcAnalysisService;
         private readonly InventoryDbContext _context;
 
-        public AlgorithmsController(ReorderService reorderService, InventoryDbContext context)
+        public AlgorithmsController(ReorderService reorderService, AbcAnalysisService abcAnalysisService, InventoryDbContext context)
         {
             _reorderService = reorderService;
+            _abcAnalysisService = abcAnalysisService;
             _context = context;
         }
+
+
+        //// Reorder Recommendation
 
         [HttpGet("reorder-recommendations/{storeId}")]
         [Authorize(Roles = "StoreManager")]   // only managers can access
@@ -41,7 +46,7 @@ namespace Inventory_System.Controllers
                 var userStoreId = User.FindFirst("StoreId")?.Value;
 
                 // validate access permission
-                if (!_reorderService.ValidateReorderAccess(userRole, userStoreId, storeId))
+                if (!_reorderService.ValidateUser(userRole, userStoreId, storeId))
                 {
                     return Forbid();
                 }
@@ -52,16 +57,60 @@ namespace Inventory_System.Controllers
                 {
                     success = true,
                     storeId = storeId,
-                    generatedDate = DateTime.UtcNow,
                     estimatedTotalCost = recommendations.Sum(r => r.EstimatedCost),
                     data = recommendations
                 });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { success = false, message = "Rrror occurred while getting recommendations", error = ex.Message });
+                return StatusCode(500, new { success = false, message = "Error occurred while getting recommendations", error = ex.Message });
             }
 
         }
+
+
+        //// ABC Analysis
+
+        [HttpGet("abc-analysis/{storeId}")]
+        [Authorize(Roles = "StoreManager")]
+        public async Task<ActionResult<List<AbcAnalysisDto>>> GetAbcAnalysis(int storeId)
+        {
+            try
+            {
+                // Check if store exists 
+                var storeExists = await _context.Stores.AnyAsync(s => s.Id == storeId);
+                if (!storeExists)
+                {
+                    return NotFound(new { success = false, message = "Store not found" });
+                }
+
+                // get user info from token
+                var userRole = User.FindFirst(ClaimTypes.Role)?.Value ?? "";
+                var userStoreId = User.FindFirst("StoreId")?.Value;
+
+                // validate access permission
+                if (!_reorderService.ValidateUser(userRole, userStoreId, storeId))
+                {
+                    return Forbid();
+                }
+
+                var abcResults = await _abcAnalysisService.getAbcAnalysis(storeId);
+
+                return Ok(new
+                {
+                    success = true,
+                    storeId = storeId,
+                    data = abcResults
+                });
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Error occurred while getting recommendations", error = ex.Message });
+            }
+        }
+
+
+
     }
 }
