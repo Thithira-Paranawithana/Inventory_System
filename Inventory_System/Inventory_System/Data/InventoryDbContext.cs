@@ -14,5 +14,31 @@ namespace Inventory_System.Data
         public DbSet<SalesTransaction> SalesTransactions { get; set; }
         public DbSet<ReorderRecommendation> ReorderRecommendations { get; set; }
 
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Add unique constraint for Username
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
+
+            // Add unique constraint for SKU  
+            modelBuilder.Entity<Product>()
+                .HasIndex(p => p.SKU)
+                .IsUnique();
+
+            // Add unique constraint for Store Code 
+            modelBuilder.Entity<Store>()
+                .HasIndex(s => s.Code)
+                .IsUnique();
+
+        }
+
+
     }
+
+
+
 }
